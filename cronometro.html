@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+body {
+	background: #333;
+	color: orange;
+	text-align: center;
+	letter-spacing: 2px;
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+    font-weight: bolder;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 auto;	
+	user-select: none;
+}
+
+.time {
+	font-size: 350px;
+    height: auto;
+}
+
+button {
+  border: 0;
+  padding: 8px 20px;
+  margin: 0 2px 5px 0;
+  border-radius: 5px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 35px;
+  color: #fff;
+	cursor: pointer;
+	outline: none;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.9);
+}
+
+button:active {
+	transform: scale(0.98);
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+}
+.start{
+    background-color: #27D128;
+}
+.stop{
+    background-color: #FFC61A;
+}
+.reset{
+    background-color: #C33919;
+}
+h2{
+    font-size: 30px;
+    color: orange;
+    margin: 0;
+    padding: 0;
+}
+
+.pergunta{
+    font-size: 0px;
+    color: #FFF;
+    line-height: 100%;
+    width: 93%;
+    font-size: 70px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+    </style>
+
+  </head>
+  <body>
+		<div class="container">
+            <div class="pergunta">
+                "Aos oprimidos é permitido uma vez a cada poucos anos decidir quais representantes específicos da classe opressora devem representá-los e reprimi-los." (Karl Marx)
+            </div>
+			<h2>TEMPO DE RESPOSTA</h2>
+			<div class="main">
+				<div class="time">
+					<span class="minutes">00</span>:<span class="seconds">00</span>:<span class="miliseconds">00</span>
+                </div>
+				<div>
+					<button onclick="start()" class="start" background="#FFC61A">INICIAR</button>
+					<button onclick="stop()" class="stop">PARAR</button>
+					<button onclick="reset()" class="reset">ZERAR</button>
+				</div>
+			</div>
+		</div>
+    <script src="script.js"></script>
+  </body>
+  <script>
+    const milisec = document.querySelector(".miliseconds")
+const sec = document.querySelector(".seconds")
+const min = document.querySelector(".minutes")
+const button = document.querySelector(".start")
+let miliNum = 0;
+let secNum = 0;
+let minNum = 0;
+let INTERVAL;
+let isRunning = false;
+
+function miliseconds() {
+	miliNum++;
+	if (miliNum < 10) {
+		milisec.innerHTML = "0" + miliNum;
+	}
+	else {
+		milisec.innerHTML = miliNum;
+	}
+
+	if (miliNum == 99) {
+		miliNum = 0;
+		seconds();
+	}
+}
+
+function seconds() {
+	secNum++
+	if (secNum < 10) {
+		sec.innerHTML = "0" + secNum;
+		}
+	else {
+		sec.innerHTML = secNum;
+	}
+
+	if (secNum == 59) {
+		secNum = 0;
+		minutes();
+	}
+}
+
+function minutes() {
+	minNum++;
+	if (minNum < 10) {
+		min.innerHTML = "0" + minNum;
+	}
+	else {
+		min.innerHTML = minNum;
+	}
+}
+
+function start() {
+	clearInterval(INTERVAL);
+	button.innerHTML = "START"
+	INTERVAL = setInterval(() => {
+		miliseconds()
+	}, 10)
+}
+
+function stop() {
+	clearInterval(INTERVAL);
+	button.innerHTML = "RESUME"
+}
+
+function reset() {
+	clearInterval(INTERVAL);
+	miliNum = 0;
+	secNum = 0;
+	minNum = 0;
+	milisec.innerHTML = "00";
+	sec.innerHTML = "00";
+	min.innerHTML = "00";
+}
+  </script>
+</html>
